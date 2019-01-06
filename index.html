@@ -27,20 +27,23 @@
   //adds the item to the list
   function addItem(e) {
     e.preventDefault(); //stops the page from reloading
+    
     const text = (this.querySelector('[name=item]')).value //THIS is the current form and we're getting the field "name" from it
+    
     const item = {
       text, //ES6 notation, instead of text: text
       done: false
     }
+    
     items.push(item) //moves the item into the array
-    populateList(items, itemList)
+    populateList(items, itemsList)
     this.reset() //resets the form
 
   }
 
   //generates the list with the stored items
   function populateList(games = [], gamesList) {
-    //iterates the array and sets the inner HTML to the string containin the item. It then joins the list
+    //iterates the array and sets the inner HTML to the string containin the item. Creates an <li> for each item submitted
     gamesList.innerHTML = games.map((game, i) => {
       //backticks cause we're returning HTML
       return ` 
