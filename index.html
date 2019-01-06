@@ -48,7 +48,8 @@
       //backticks cause we're returning HTML
       return ` 
         <li>
-          <label for="">${game.text}</label>
+          <input type="checkbox" data-index=${i} id="item${i}" ${game.done ? 'checked' : ''} />
+          <label for="item${i}">${game.text}</label>
         </li>
       `
     }).join('') //converts the returned array from map into string
