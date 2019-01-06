@@ -33,6 +33,12 @@
       box-shadow: 0 0 0 10px rgba(0,0,0,0.1);
     }
 
+    #clear,
+    #check{
+      padding: 5px;
+      margin-top: 10px;
+    }
+
     h2 {
       text-align: center;
       margin: 0;

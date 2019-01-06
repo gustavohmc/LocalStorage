@@ -17,12 +17,20 @@
       <input type="text" name="item" placeholder="Game title" required>
       <input type="submit" value="+ Add Game">
     </form>
+    <button id="clear" type="default">Clear All</button>
+    <button id="check" type="default">Check All</button>
   </div>
 
 <script>
+  //assings the classes to variables for easier manipulation
   const addItems = document.querySelector('.add-items')
   const itemsList = document.querySelector('.games')
-  const items = [] //will contain the listed items
+  const clearAllItems = document.querySelector('#clear')
+  const checkAllItems = document.querySelector('#check')
+
+
+  //the array with the items in the list. When page loads, it looks for items in local storage and parses them from string to object. If there's nothing stored, it loads an empty array
+  const items = JSON.parse(localStorage.getItem('items')) || []
 
   //adds the item to the list
   function addItem(e) {
@@ -37,6 +45,10 @@
     
     items.push(item) //moves the item into the array
     populateList(items, itemsList)
+
+    //set items to local storage. Need to stringify cause it only takes strings
+    localStorage.setItem('items', JSON.stringify(items))
+
     this.reset() //resets the form
 
   }
@@ -55,9 +67,57 @@
     }).join('') //converts the returned array from map into string
   }
 
-  //runs the add function when user submits an entry
-  addItems.addEventListener('submit', addItem);
+  //unchecks all boxes
+  function clearAll(){
+    
+    const newList = [...items] //create a copy of items
+    for (i=0;i<newList.length;i++){//changes done to false in all items
+      newList[i].done = false
+    }
+    
+    localStorage.setItem('items', JSON.stringify(newList))//saves to storage
 
+    populateList(items, itemsList)//repopulates the list
+    
+  }
+
+  //checks all boxes
+  function checkAll(){
+    
+    const newList = [...items] //create a copy of items
+    for (i=0;i<newList.length;i++){//changes done to false in all items
+      newList[i].done = true
+    }
+    
+    localStorage.setItem('items', JSON.stringify(newList))//saves to storage
+
+    populateList(items, itemsList)//repopulates the list
+    
+  }
+
+  //event delegation: because the items won't be available until created, we need to attach the 
+  //toggle function to an element that will always be loaded. In this case we can use the <ul> 
+  //that will contain the added items and pass the click event to the children elements when they exist
+  function toggleChecked (e){
+    if(!e.target.matches('input')) return //in case we click something that is not the checkbox
+    
+    const element = e.target //isolates the item we are checking
+    const index = element.dataset.index //grabs the specific index for each item
+
+    items[index].done = !items[index].done //flips the done state on the checked item
+
+    localStorage.setItem('items', JSON.stringify(items)) //saves changes
+
+    populateList(items, itemsList) // repopulates the list
+
+  }
+
+  //runs the add function when user submits an entry
+  addItems.addEventListener('submit', addItem)
+  itemsList.addEventListener('click', toggleChecked)
+  clearAllItems.addEventListener('click', clearAll)
+  checkAllItems.addEventListener('click', checkAll)
+  populateList(items, itemsList)
 
 </script>
 
