@@ -1,4 +1,6 @@
 
+    @import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+    
     html {
       box-sizing: border-box;
       background: url('http://www.yunlinplay.tw/gimg/f/12/127432_gaming-wallpapers-1080p.jpg') center no-repeat;
@@ -8,7 +10,7 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      font-family: Futura,"Trebuchet MS",Arial,sans-serif;
+      font-family: 'Press Start 2P', cursive;
     }
 
     *, *:before, *:after {
